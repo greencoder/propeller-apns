@@ -40,6 +40,8 @@ $ python server.py
 ```
 
 This web server allows you to queue jobs via HTTP POST. Use the following parameters:
+
+1. `auth_token`: (string) The secret auth token you defined in [server.py](../blob/master/server.py#L15)
 1. `title`: (string) The title of your notification
 1. `body`: (string) The body of your notification
 1. `badge`: (integer, optional) The badge count to display
@@ -49,18 +51,25 @@ This web server allows you to queue jobs via HTTP POST. Use the following parame
 
 *Note: If you are running multiple workers for different applications, you can use this API to queue messages to target the appropriate worker.*
 
+There is an HTML form included with the web server for testing/diagnostic purposes, but it's not protected out of the box. **Do not leave it enabled without protecting it!**
+
 ## Generating Certificates
 
-You must generate a `.pem` certificate file from the `.p12` that Apple provides. 
+You must generate a `.pem` certificate file from the `.p12` that Apple provides. Apple provides a helpful guide to [Creating a Universal Push Notification Client SSL Certificate](https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/AppDistributionGuide/AddingCapabilities/AddingCapabilities.html#//apple_ref/doc/uid/TP40012582-CH26-SW11)
 
-Apple provides a helpful guide to [Creating a Universal Push Notification Client SSL Certificate](https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/AppDistributionGuide/AddingCapabilities/AddingCapabilities.html#//apple_ref/doc/uid/TP40012582-CH26-SW11)
+Following the steps in Apple's guide, generate the production HTTP/2 Cert (use Apple Push Notification service SSL (Sandbox & Production) under Production)
 
-1. Following the steps in Apple's guide, generate the PRODUCTION HTTP/2 Cert (use Apple Push Notification service SSL (Sandbox & Production) under Production)
-2. In Keychain Assistant, click on "My Certificates" on the left, then select the Apple Push Services item and its associated key as `certificate.p12`
-3. Convert the `.p12` file to a .`pem` file:
-`$ openssl pkcs12 -in certificate.p12 -out certificate.pem -nodes`
-4. If you have a passphrase, remove it:
-`$ openssl rsa -in certificate.pem -out certificate_nopass.pem && mv certificate_nopass.pem certificate.pem`
+In Keychain Assistant on your Mac, click on "My Certificates" on the left, then select the Apple Push Services item and its associated key as `certificate.p12`. (or you can name it what you want)
+
+Convert the `.p12` file to a .`pem` file:
+```
+$ openssl pkcs12 -in certificate.p12 -out certificate.pem -nodes`
+```
+
+If you have a passphrase, remove it:
+```
+$ openssl rsa -in certificate.pem -out certificate_nopass.pem && mv certificate_nopass.pem certificate.pem
+```
 
 ## Notes on Using Beanstalkd
 

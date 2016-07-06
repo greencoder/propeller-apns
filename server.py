@@ -11,7 +11,8 @@ application.debug = True
 
 conn = Beanstalkd.Connection()
 
-TOKEN = '0d6d8d20-13c3-11e6-a148-3e1d05defe78'
+# Put your own token here and keep it secret!
+TOKEN = '00000000-0000-0000-0000-000000000000'
 
 @application.route('/post', methods=['POST'])
 def post():
