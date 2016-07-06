@@ -14,8 +14,8 @@ By default, the worker talks to the beanstalkd queue on its standard port `11300
 ```
 $ python worker.py --cert=<path/to/certificate.pem> --server=<sandbox|production> --topic=<com.example.bundleid>
 ````
-
 Arguments:
+
 1. `--cert`: Path to the .pem certificate file (see "Generating Certificates" below)
 1. `--server`: Which Apple server, `production` or `sandbox`, to use (only use production from your App Store version)
 1. `--topic`: The bundle identifier of your application
